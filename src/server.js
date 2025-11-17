@@ -11,8 +11,11 @@ const hostname = process.env.HOST_NAME;
 //config temple engine
 configViewEngine(app);
 
-//
-app.use("/test", webRoutes);
+//điều hướng 
+app.use("/", webRoutes);
+
+// cách viết sau để chia api version
+// app.use("/test", webRoutes);
 
 app.listen(port, hostname, () => {
   console.log(`Example app listening on port ${port}`);
