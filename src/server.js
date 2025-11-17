@@ -1,28 +1,18 @@
 // import express from 'express'
+require("dotenv").config();
 const express = require("express");
 const path = require("path");
+const configViewEngine = require("./config/viewEngine");
+webRoutes = require("./routes/web");
 const app = express();
-
-require("dotenv").config();
 const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
 
-// app.set("views", "./src/views/");
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+//config temple engine
+configViewEngine(app);
 
-app.get("/", (req, res) => {
-  res.send("Hello World! Nodemon");
-});
-
-app.get("/abc", (req, res) => {
-  res.send("check abc");
-});
-
-app.get("/backend", (req, res) => {
-  // res.send('check abc')
-  res.render("sample.ejs");
-});
+//
+app.use("/test", webRoutes);
 
 app.listen(port, hostname, () => {
   console.log(`Example app listening on port ${port}`);
