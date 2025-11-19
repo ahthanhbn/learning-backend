@@ -1,10 +1,9 @@
 // import express from 'express'
-require("dotenv").config();
+require("dotenv").config({ silent: true });
 const express = require("express");
-const path = require("path");
 const configViewEngine = require("./config/viewEngine");
 const webRoutes = require("./routes/web");
-const mysql = require("mysql2");
+const connection = require("./config/database");
 
 const app = express();
 const port = process.env.PORT || 8888;
@@ -13,27 +12,21 @@ const hostname = process.env.HOST_NAME;
 //config temple engine
 configViewEngine(app);
 
+//config req.body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 //điều hướng
 app.use("/", webRoutes);
 
-//test connection
-var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3307, //default: 3306
-  user: "root",
-  password: "123456",
-  database: "hoidanit",
-});
+// //select database
+// connection.connect();
+// connection.query("SELECT * FROM Users u ;", function (error, results, fields) {
+//   if (error) throw error;
+//   // console.log("🚀 ~ results:", results);
+// });
 
-connection.connect();
-
-connection.query("SELECT * FROM Users u ;", function (error, results, fields) {
-  if (error) throw error;
-  console.log("🚀 ~ results:", results);
-  console.log("🚀 ~ fields:", fields);
-});
-
-connection.end();
+// connection.end();
 
 // cách viết sau để chia api version
 // app.use("/test", webRoutes);
