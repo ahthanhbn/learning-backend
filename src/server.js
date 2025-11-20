@@ -20,13 +20,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", webRoutes);
 
 // //select database
-// connection.connect();
+
 // connection.query("SELECT * FROM Users u ;", function (error, results, fields) {
 //   if (error) throw error;
 //   // console.log("🚀 ~ results:", results);
 // });
 
-// connection.end();
 
 // cách viết sau để chia api version
 // app.use("/test", webRoutes);
