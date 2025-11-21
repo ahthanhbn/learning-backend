@@ -14,27 +14,27 @@
         <li><a href="/create">Create Users</a></li>
     </ul>
     <div class="form">
-        <form action="/update-user" method="post">
+        <form>
             <fieldset>
                 <legend>Update a User</legend>
                 <div class="input-group">
                     <label for="">id:</label>
-                    <input type="text" readonly value="<%= userEdit.id%>" name="id">
+                    <input id="id" type="text" readonly value="<%= userEdit.id%>" name="id">
                 </div>
                 <div class="input-group">
                     <label for="">Email:</label>
-                    <input type="text" value="<%= userEdit.email%>" name="email">
+                    <input id="email" type="text" value="<%= userEdit.email%>" name="email">
                 </div>
                 <div class="input-group">
                     <label for="">Name:</label>
-                    <input type="text" value="<%= userEdit.name%>" name="uName">
+                    <input id="name" type="text" value="<%= userEdit.name%>" name="uName">
                 </div>
                 <div class="input-group">
                     <label for="">City:</label>
-                    <input type="text" value="<%= userEdit.city%>" name="city">
+                    <input id="city" type="text" value="<%= userEdit.city%>" name="city">
                 </div>
                 <div>
-                    <button>
+                    <button type="button" onclick="handleUpdateUser()">
                         Save
                     </button>
                 </div>
@@ -42,5 +42,43 @@
         </form>
     </div>
 </body>
+
+<script>
+    const handleUpdateUser = async () => {
+        const updateData = {
+            id: document.getElementById('id').value,
+            email: document.getElementById('email').value,
+            uName: document.getElementById('name').value,
+            city: document.getElementById('city').value,
+        };
+
+        if (confirm("Bạn có chắc chắn muốn cập nhật người dùng ID " + updateData.id + " không?")) {
+            try {
+                // 2. Gửi yêu cầu Fetch (POST) với Body JSON
+                const response = await fetch('/update-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updateData), // Gửi dữ liệu cập nhật
+                });
+
+                // 3. Kiểm tra phản hồi
+                if (response.ok) {
+                    alert('Cập nhật thành công!');
+                    // Chuyển hướng về trang chủ
+                    window.location.href = '/';
+                } else {
+                    // Đọc lỗi chi tiết từ Server nếu có
+                    const errorData = await response.json();
+                    alert('Lỗi sửa dữ liệu trên Server: ' + (errorData.message || response.statusText));
+                }
+            } catch (error) {
+                console.error("Lỗi Fetch hoặc kết nối:", error);
+                alert('Lỗi kết nối mạng.');
+            }
+        }
+    }
+</script>
 
 </html>

@@ -19,18 +19,18 @@
                 <legend>Add a User</legend>
                 <div class="input-group">
                     <label for="">Email:</label>
-                    <input type="text" id="emailId" name="email">
+                    <input type="text" id="Email" name="email">
                 </div>
                 <div class="input-group">
                     <label for="">Name:</label>
-                    <input type="text" id="" name="uName">
+                    <input type="text" id="Name" name="uName">
                 </div>
                 <div class="input-group">
                     <label for="">City:</label>
-                    <input type="text" id="" name="city">
+                    <input type="text" id="City" name="city">
                 </div>
                 <div>
-                    <button>
+                    <button type="button" onclick="handleCreateUser()">
                         Save
                     </button>
                 </div>
@@ -38,5 +38,40 @@
         </form>
     </div>
 </body>
+
+<script>
+    const handleCreateUser = async () => {
+        const updateData = {
+            email: document.getElementById('Email').value,
+            uName: document.getElementById('Name').value,
+            city: document.getElementById('City').value,
+        };
+        if (confirm("Bạn có chắc chắn muốn thêm người dùng này không?")) {
+            try { // Dùng async/await cho fetch để dễ đọc hơn
+                const response = await fetch('/create-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    // SỬA LỖI QUAN TRỌNG: Gửi dữ liệu form trong body
+                    body: JSON.stringify(updateData),
+                });
+
+                if (response.ok) {
+                    // Đảm bảo Backend trả về JSON
+                    alert('Tạo người dùng thành công!');
+                    window.location.href = '/'; // Chuyển về trang chủ
+                } else {
+                    const errorData = await response.json();
+                    alert('Lỗi tạo dữ liệu trên Server: ' + (errorData.message || response.statusText));
+                }
+            } catch (error) {
+                console.error("Lỗi Fetch:", error);
+                alert('Lỗi kết nối mạng.');
+            }
+        }
+    }
+</script>
+
 
 </html>

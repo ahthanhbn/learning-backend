@@ -87,14 +87,43 @@
                     </td>
                     <td>
                         <button onclick="window.location.href='/update/<%= user.id%>'">Edit</button>
-                        <form action="/delete-user/<%= user.id%>" method="POST">
-                            <button>Delete</button>
-                        </form>
+                        <!-- <form action="/delete-user/<%= user.id%>" method="POST"> -->
+                        <button data-user-id="<%=user.id%>" onclick="handleDelete(this.dataset.userId)">Delete</button>
+                        <!-- </form> -->
                     </td>
                 </tr>
                 <% });%>
         </table>
     </div>
 </body>
+
+<script>
+    const handleDelete = (userId) => {
+        if (confirm("Bạn có chắc chắn muốn xóa người dùng ID " + userId + " không?")) {
+
+            // Nếu người dùng nhấn 'OK' (Có), gửi yêu cầu xóa
+            fetch(`/delete-user/${userId}`, {
+                method: 'POST', // Gửi POST/DELETE đến Backend
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => {
+                    // Kiểm tra phản hồi thành công (mã 200)
+                    if (response.ok) {
+                        alert('Xóa thành công!');
+                        // Tải lại trang để cập nhật danh sách
+                        window.location.href = '/';
+                    } else {
+                        alert('Lỗi xóa dữ liệu trên Server.');
+                    }
+                })
+                .catch(error => {
+                    alert('Lỗi kết nối mạng.');
+                });
+        }
+
+    }
+</script>
 
 </html>
