@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create A User</title>
+    <title>Update A User</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -14,20 +14,24 @@
         <li><a href="/create">Create Users</a></li>
     </ul>
     <div class="form">
-        <form action="/create-user" method="post">
+        <form action="/update-user" method="post">
             <fieldset>
-                <legend>Add a User</legend>
+                <legend>Update a User</legend>
+                <div class="input-group">
+                    <label for="">id:</label>
+                    <input type="text" readonly value="<%= userEdit.id%>" name="id">
+                </div>
                 <div class="input-group">
                     <label for="">Email:</label>
-                    <input type="text" id="emailId" name="email">
+                    <input type="text" value="<%= userEdit.email%>" name="email">
                 </div>
                 <div class="input-group">
                     <label for="">Name:</label>
-                    <input type="text" id="" name="uName">
+                    <input type="text" value="<%= userEdit.name%>" name="uName">
                 </div>
                 <div class="input-group">
                     <label for="">City:</label>
-                    <input type="text" id="" name="city">
+                    <input type="text" value="<%= userEdit.city%>" name="city">
                 </div>
                 <div>
                     <button>

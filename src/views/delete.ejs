@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create A User</title>
+    <title>Delete A User</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -14,24 +14,20 @@
         <li><a href="/create">Create Users</a></li>
     </ul>
     <div class="form">
-        <form action="/create-user" method="post">
+        <form action="/delete-user" method="post">
             <fieldset>
-                <legend>Add a User</legend>
+                <legend>Delete a User</legend>
                 <div class="input-group">
-                    <label for="">Email:</label>
-                    <input type="text" id="emailId" name="email">
+                    <label for="">id:</label>
+                    <input type="text" readonly value="<%= userDelete.id%>" name="id">
                 </div>
                 <div class="input-group">
-                    <label for="">Name:</label>
-                    <input type="text" id="" name="uName">
-                </div>
-                <div class="input-group">
-                    <label for="">City:</label>
-                    <input type="text" id="" name="city">
+                    <label for=""> Are you sure delete this user with Email:</label>
+                    <input type="text" value="<%= userDelete.email%>" name="email">
                 </div>
                 <div>
-                    <button>
-                        Save
+                    <button >
+                        Confirm
                     </button>
                 </div>
             </fieldset>
